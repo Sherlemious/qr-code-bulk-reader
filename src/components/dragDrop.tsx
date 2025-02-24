@@ -23,7 +23,7 @@ const DragDrop: React.FC<DragDropProps> = ({ onFilesDropped }) => {
   return (
     <div
       {...getRootProps()}
-      className="border-2 border-dashed p-6 rounded text-center cursor-pointer hover:bg-gray-100"
+      className="border-2 border-dashed border-textSecondary p-6 rounded text-center cursor-pointer bg-surface text-textPrimary hover:bg-surfaceHover"
     >
       <input {...getInputProps()} />
       {isDragActive ? <p>Drop the files here...</p> : <p>Drag and drop some files here, or click to select files</p>}

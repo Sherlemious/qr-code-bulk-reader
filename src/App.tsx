@@ -1,6 +1,4 @@
-// src/App.tsx
 import React, { useState } from 'react';
-import FileInput from './components/fileInput';
 import DragDrop from './components/dragDrop';
 import ResultsTable, { FileResult } from './components/resultsTable';
 import { scanQRCodeUsingZXing } from './utils/qrScanner';
@@ -23,11 +21,18 @@ const App: React.FC = () => {
           error: 'No QR Code found',
         };
       }
-    } catch (error: any) {
-      return {
-        fileName: file.name,
-        error: error.message || 'Error processing file',
-      };
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return {
+          fileName: file.name,
+          error: error.message || 'Error processing file',
+        };
+      } else {
+        return {
+          fileName: file.name,
+          error: 'Unknown error occurred',
+        };
+      }
     }
   };
 
@@ -39,11 +44,8 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4 text-center">QR Code Scanner</h1>
-      <div className="mb-4">
-        <FileInput onFilesSelected={processFiles} />
-      </div>
+    <div className="container mx-auto p-4 bg-background text-textPrimary min-h-screen">
+      <h1 className="text-2xl font-bold mb-4 text-center text-primary">QR Code Scanner</h1>
       <div className="mb-4">
         <DragDrop onFilesDropped={processFiles} />
       </div>
