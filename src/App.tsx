@@ -1,24 +1,21 @@
+// src/App.tsx
 import React, { useState } from 'react';
 import FileInput from './components/fileInput';
 import DragDrop from './components/dragDrop';
 import ResultsTable, { FileResult } from './components/resultsTable';
+import { scanQRCodeUsingZXing } from './utils/qrScanner';
 
 const App: React.FC = () => {
   const [results, setResults] = useState<FileResult[]>([]);
 
-  // Dummy function to simulate QR code processing.
-  // Replace this with your actual QR code scanning logic.
+  // Process a single file using our ZXing QR scanner
   const processFile = async (file: File): Promise<FileResult> => {
     try {
-      // Simulate a delay for processing
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
-      // For demo purposes, we assume if the file name contains "qr", a QR code is detected.
-      const isQRFound = file.name.toLowerCase().includes('qr');
-      if (isQRFound) {
+      const qrData = await scanQRCodeUsingZXing(file);
+      if (qrData) {
         return {
           fileName: file.name,
-          result: 'QR Code Detected: "example data"',
+          result: qrData,
         };
       } else {
         return {
@@ -34,9 +31,10 @@ const App: React.FC = () => {
     }
   };
 
+  // Process multiple files (from input or drag & drop)
   const processFiles = async (files: FileList | File[]) => {
     const filesArray = Array.isArray(files) ? files : Array.from(files);
-    const processedResults = await Promise.all(filesArray.map((file) => processFile(file)));
+    const processedResults = await Promise.all(filesArray.map(processFile));
     setResults((prev) => [...prev, ...processedResults]);
   };
 
