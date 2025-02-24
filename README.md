@@ -1,4 +1,3 @@
-````markdown
 # Bulk QR Code Scanner
 
 A sleek, dark-mode bulk QR code scanning web app built with **Vite**, **React**, **TypeScript**, **Tailwind CSS**, and **ZXing**. Quickly upload multiple images (via file input or drag & drop) to extract QR code data with a modern, responsive interface.
@@ -42,7 +41,6 @@ A sleek, dark-mode bulk QR code scanning web app built with **Vite**, **React**,
    git clone https://github.com/yourusername/qr-bulk-reader.git
    cd qr-bulk-reader
    ```
-````
 
 2. **Install dependencies:**
 
