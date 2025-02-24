@@ -1,50 +1,98 @@
-# React + TypeScript + Vite
+````markdown
+# Bulk QR Code Scanner
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A sleek, dark-mode bulk QR code scanning web app built with **Vite**, **React**, **TypeScript**, **Tailwind CSS**, and **ZXing**. Quickly upload multiple images (via file input or drag & drop) to extract QR code data with a modern, responsive interface.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Bulk Processing:** Scan multiple images at once.
+- **Drag & Drop Upload:** Easy file uploads using drag & drop.
+- **Live Previews:** Thumbnail previews with click-to-expand functionality.
+- **QR Code Detection:** Uses ZXing to decode QR codes from images.
+- **Dark Mode Design:** Clean, modern UI with a custom dark theme.
+- **Responsive Layout:** Optimized for both desktop and mobile devices.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+---
 
-- Configure the top-level `parserOptions` property like this:
+## Tech Stack
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- **Vite** - Fast development and build tool.
+- **React & TypeScript** - Robust and maintainable UI code.
+- **Tailwind CSS** - Utility-first styling with custom dark mode configuration.
+- **ZXing** - Library for QR code scanning.
+- **Lucide React** - Modern icons.
+- **React Dropzone** - Simplified file drag & drop.
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v14 or later)
+- [npm](https://www.npmjs.com/)
+
+### Installation
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/yourusername/qr-bulk-reader.git
+   cd qr-bulk-reader
+   ```
+````
+
+2. **Install dependencies:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server:**
+
+   ```bash
+   npm run dev
+   ```
+
+   Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+### Building for Production
+
+```bash
+npm run build
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Deploy the generated `dist` folder to your favorite hosting provider.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+---
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+## Project Structure
+
 ```
+qr-bulk-reader/
+├── src/
+│   ├── components/
+│   │   ├── dragDrop.tsx
+│   │   ├── resultsTable.tsx
+│   │   └── imageModal.tsx
+│   ├── utils/
+│   │   └── qrScanner.ts
+│   ├── App.tsx
+│   └── index.css
+├── tailwind.config.cjs
+├── postcss.config.cjs
+├── package.json
+└── README.md
+```
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+Contributions, issues, and feature requests are welcome!
