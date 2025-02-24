@@ -1,23 +1,31 @@
+// src/App.tsx
 import React, { useState } from 'react';
 import DragDrop from './components/dragDrop';
 import ResultsTable, { FileResult } from './components/resultsTable';
+import ImageModal from './components/imageModal';
 import { scanQRCodeUsingZXing } from './utils/qrScanner';
 
 const App: React.FC = () => {
   const [results, setResults] = useState<FileResult[]>([]);
+  const [selectedResult, setSelectedResult] = useState<FileResult | null>(null);
 
   // Process a single file using our ZXing QR scanner
   const processFile = async (file: File): Promise<FileResult> => {
+    // Generate a preview URL for the file.
+    const previewUrl = URL.createObjectURL(file);
+
     try {
       const qrData = await scanQRCodeUsingZXing(file);
       if (qrData) {
         return {
           fileName: file.name,
+          previewUrl,
           result: qrData,
         };
       } else {
         return {
           fileName: file.name,
+          previewUrl,
           error: 'No QR Code found',
         };
       }
@@ -25,11 +33,13 @@ const App: React.FC = () => {
       if (error instanceof Error) {
         return {
           fileName: file.name,
+          previewUrl,
           error: error.message || 'Error processing file',
         };
       } else {
         return {
           fileName: file.name,
+          previewUrl,
           error: 'Unknown error occurred',
         };
       }
@@ -49,7 +59,13 @@ const App: React.FC = () => {
       <div className="mb-4">
         <DragDrop onFilesDropped={processFiles} />
       </div>
-      <ResultsTable results={results} />
+      <ResultsTable results={results} onPreviewClick={setSelectedResult} />
+      <ImageModal
+        isOpen={!!selectedResult}
+        imageUrl={selectedResult?.previewUrl || ''}
+        fileName={selectedResult?.fileName || ''}
+        onClose={() => setSelectedResult(null)}
+      />
     </div>
   );
 };
