@@ -17,7 +17,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, onPreviewClick }) 
   const isUrl = (text: string) => /^(https?:\/\/)/.test(text);
 
   return (
-    <div className="overflow-x-auto mt-6">
+    <div className="overflow-x-auto mt-6 scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-surfaceHover scrollbar-track-surface">
       <table className="min-w-full divide-y divide-surfaceHover">
         <thead className="bg-surface">
           <tr>
