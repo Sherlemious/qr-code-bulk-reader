@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.0.8",
     "@zxing/library": "^0.21.3",
     "lucide-react": "^0.475.0",
     "react": "^19.0.0",
