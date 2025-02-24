@@ -1,52 +1,29 @@
-// src/App.tsx
 import React, { useState } from 'react';
 import DragDrop from './components/dragDrop';
 import ResultsTable, { FileResult } from './components/resultsTable';
 import ImageModal from './components/imageModal';
-import { scanQRCodeUsingZXing } from './utils/qrScanner';
+import { scanQRCode } from './utils/qrScanner';
 
 const App: React.FC = () => {
   const [results, setResults] = useState<FileResult[]>([]);
   const [selectedResult, setSelectedResult] = useState<FileResult | null>(null);
 
-  // Process a single file using our ZXing QR scanner
   const processFile = async (file: File): Promise<FileResult> => {
-    // Generate a preview URL for the file.
     const previewUrl = URL.createObjectURL(file);
 
     try {
-      const qrData = await scanQRCodeUsingZXing(file);
+      const qrData = await scanQRCode(file);
       if (qrData) {
-        return {
-          fileName: file.name,
-          previewUrl,
-          result: qrData,
-        };
+        return { fileName: file.name, previewUrl, result: qrData };
       } else {
-        return {
-          fileName: file.name,
-          previewUrl,
-          error: 'No QR Code found',
-        };
+        return { fileName: file.name, previewUrl, error: 'No QR Code found' };
       }
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        return {
-          fileName: file.name,
-          previewUrl,
-          error: error.message || 'Error processing file',
-        };
-      } else {
-        return {
-          fileName: file.name,
-          previewUrl,
-          error: 'Unknown error occurred',
-        };
-      }
+      const errorMsg = error instanceof Error ? error.message : 'Unknown error occurred';
+      return { fileName: file.name, previewUrl, error: errorMsg };
     }
   };
 
-  // Process multiple files (from input or drag & drop)
   const processFiles = async (files: FileList | File[]) => {
     const filesArray = Array.isArray(files) ? files : Array.from(files);
     const processedResults = await Promise.all(filesArray.map(processFile));

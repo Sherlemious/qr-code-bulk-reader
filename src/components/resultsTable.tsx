@@ -16,8 +16,14 @@ const ResultsTable: React.FC<ResultsTableProps> = ({ results, onPreviewClick }) 
   // Utility function to check if a string is a URL.
   const isUrl = (text: string) => /^(https?:\/\/)/.test(text);
 
+  // Count how many scans were successful (have a result and no error)
+  const successCount = results.filter((result) => result.result && !result.error).length;
+
   return (
     <div className="overflow-x-auto mt-6 scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-surfaceHover scrollbar-track-surface">
+      <div className="mb-4 text-textPrimary">
+        <strong>Successful scans: {successCount}</strong> out of {results.length} images processed.
+      </div>
       <table className="min-w-full divide-y divide-surfaceHover">
         <thead className="bg-surface">
           <tr>
